@@ -340,5 +340,189 @@ namespace BL
             }
             return result;
         }
+
+        //GetAll
+        public static ML.Result GetAll(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+                    var libroList = context.Libros.FromSqlRaw($"LibroGetAll '{libro.TituloLibro}','{libro.FechaPublicacion}','{libro.Autor.Nombre}','{libro.Editorial.Nombre}'").ToList();
+
+                    result.Objects = new List<object>();
+
+                    foreach (var row in libroList)
+                    {
+
+
+                        libro.IdLibro = row.IdLibro;
+                        libro.TituloLibro = row.TituloLibro;
+                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
+
+                        libro.Sipnosis = row.Sipnosis;
+                        libro.Portada = row.Portada;
+
+                        result.Objects.Add(libro);
+
+                    }
+                    result.Correct = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = ex.Message;
+
+            }
+            return result;
+        }
+
+        //GetAll Busqueda abierta
+        public static ML.Result GetAllLibro(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+                    var libroList = context.Libros.FromSqlRaw($"LibroGetAll {libro.IdLibro},{libro.Autor.IdAutor},'{libro.Editorial.IdEditorial}'").ToList();
+
+                    result.Objects = new List<object>();
+
+                    foreach (var row in libroList)
+                    {
+
+
+                        libro.IdLibro = row.IdLibro;
+                        libro.TituloLibro = row.TituloLibro;
+                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
+
+                        libro.Sipnosis = row.Sipnosis;
+                        libro.Portada = row.Portada;
+
+                        result.Objects.Add(libro);
+
+                    }
+                    result.Correct = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = ex.Message;
+
+            }
+            return result;
+        }
+
+        //GetById
+        public static ML.Result GetById(byte IdLibro)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+
+                    var libroList = context.Libros.FromSqlRaw($"GetById {IdLibro}").AsEnumerable().FirstOrDefault();
+
+                    if (libroList != null)
+                    {
+                        ML.Libro libro = new ML.Libro();
+
+                        libro.IdLibro = libroList.IdLibro;
+                        libro.TituloLibro = libroList.TituloLibro;
+                        libro.FechaPublicacion = libroList.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = libroList.IdAutor.Value;
+                        libro.Autor.Nombre = libroList.NombreAutor;
+                        libro.Autor.ApellidoPaterno = libroList.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = libroList.ApellidoMaterno;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = libroList.IdEditorial.Value;
+                        libro.Editorial.Nombre = libroList.NombreEditorial;
+
+                        libro.Sipnosis = libroList.Sipnosis;
+                        libro.Portada = libroList.Portada;
+
+                        result.Object = libro;
+                        result.Correct = true;
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrió un error al obtener los registros en la tabla libros";
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+
+        //Delete
+        public static ML.Result Delete(byte IdLibro)
+        {
+            ML.Result result = new ML.Result();
+
+            //ML.Libro libro = new ML.Libro();
+            try
+            {
+                using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
+                {
+                    int query = cnn.Database.ExecuteSqlRaw($"LibroDelete {IdLibro}");
+
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "An error occurred while deleting the record into the table" + result.Ex;
+                throw;
+            }
+            return result;
+        }
     }
 }
