@@ -20,8 +20,7 @@ namespace PL.Controllers
 
             using (var client = new HttpClient())
             {
-                string urlApi = configuration["urlWebApi"];
-                client.BaseAddress = new Uri(urlApi);
+                client.BaseAddress = new Uri("http://localhost:5230/api/");
 
                 var responseTask = client.GetAsync("Libro/GetAll");
                 responseTask.Wait();
