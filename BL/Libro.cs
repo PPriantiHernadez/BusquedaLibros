@@ -228,6 +228,7 @@ namespace BL
             return result;
         }
 
+
         //CONSULTA POR AUTOR Y EDITORIAL :3
         public static ML.Result LibroByAutor_Fecha(int idAutor, string fecha)
         {
