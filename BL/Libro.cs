@@ -349,6 +349,7 @@ namespace BL
 
             try
             {
+
                 using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
                 {
                     var libroList = context.Libros.FromSqlRaw($"LibroGetAll '{libro.TituloLibro}','{libro.FechaPublicacion}','{libro.Autor.Nombre}','{libro.Editorial.Nombre}'").ToList();
