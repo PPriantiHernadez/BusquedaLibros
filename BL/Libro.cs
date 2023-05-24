@@ -63,9 +63,13 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
                         libro.Editorial = new ML.Editorial();
                         libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
 
                         libro.Sipnosis = row.Sipnosis;
                         libro.Portada = row.Portada;
@@ -110,9 +114,14 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
+
 
                         libro.Editorial = new ML.Editorial();
                         libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
 
                         libro.Sipnosis = row.Sipnosis;
                         libro.Portada = row.Portada;
@@ -156,9 +165,13 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
                         libro.Editorial = new ML.Editorial();
                         libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
 
                         libro.Sipnosis = row.Sipnosis;
                         libro.Portada = row.Portada;
