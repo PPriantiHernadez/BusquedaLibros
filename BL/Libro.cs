@@ -39,8 +39,7 @@ namespace BL
             return result;
         }
 
-        //CREAR CONSULTAS POR AUTOR :) PRISCILA
-
+        //CREAR CONSULTAS POR TITULO DE LIBRO :)
         public static ML.Result LibroGetbyAutor(byte IdAutor)
         {
             ML.Result result = new ML.Result();
@@ -70,7 +69,7 @@ namespace BL
                         libro.Sipnosis = row.Sipnosis;
                         libro.Portada = row.Portada;
 
-                       result.Objects.Add(libro);
+                        result.Objects.Add(libro);
 
                     }
                     result.Correct = true;
