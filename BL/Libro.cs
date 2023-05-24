@@ -188,6 +188,7 @@ namespace BL
             }
             return result;
         }
+
         //CONSULTA LIBRO EDITORIAL :3
         public static ML.Result LibrosByEditorial(int idEditorial)
         {
@@ -197,7 +198,7 @@ namespace BL
             {
                 using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
                 {
-                    var query = cnn.Libros.FromSqlRaw($"LibrosByEditorial {idEditorial}").ToList();
+                    var query = cnn.Libros.FromSqlRaw($"LibroByEditorial {idEditorial}").ToList();
 
                     result.Objects = new List<object>();
 
@@ -238,9 +239,8 @@ namespace BL
             return result;
         }
 
-
         //CONSULTA POR AUTOR Y EDITORIAL :3
-        public static ML.Result LibroByAutor_Fecha(int idAutor, string fecha)
+        public static ML.Result LibroByAutor_Fecha(string autor, string fecha)
         {
             ML.Result result = new ML.Result();
 
@@ -248,7 +248,7 @@ namespace BL
             {
                 using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
                 {
-                    var query = cnn.Libros.FromSqlRaw($"LibroByAutor_Fecha {idAutor},'{fecha}'").ToList();
+                    var query = cnn.Libros.FromSqlRaw($"LibroByAutor_Fecha {autor},'{fecha}'").ToList();
 
                     result.Objects = new List<object>();
 
@@ -340,6 +340,5 @@ namespace BL
             }
             return result;
         }
-
     }
 }
