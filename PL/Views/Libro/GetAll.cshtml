@@ -1,0 +1,136 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+
+        <h1 class="text-center">Lista de Libros</h1>
+        <p>
+            En este modulo visualizar los libros ,agregar libros, buscar por titulo de libro, autor, fecha de publicacion y nombre de editorial
+
+        </p>
+    </section>
+    <section>
+
+        <div style="float:right;">
+            <div class="row">
+                @Html.ActionLink("Agregar", "Form", "Libro", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus-fill" })
+            </div>
+        </div>
+    </section>
+    <hr />
+
+    <div class="container-fluid">
+
+
+        @using (Html.BeginForm("GetAll", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Libros)
+
+                @Html.DropDownListFor(model => model.Libros, new SelectList(Model.Autor.Autores, "IdAutor", "TituloLibro"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.TituloLibro)
+
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Editorial)
+
+                @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.Editorial.IdEditorial)
+
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Autor)
+
+                @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.Autor.IdAutor)
+
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Editorial)
+
+                @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.Editorial.IdEditorial)
+
+            </div>
+        }
+
+    </div>
+
+
+
+    <section>
+        @if (Model.Libros == null)
+        {
+            <div class="row">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Message
+                </div>
+            </div>
+        }
+        else
+        {
+
+
+            <table class="table table-hover table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        
+                        <td class="visually-hidden">IdLibro</td>
+                        <td class="text-center" style="font-weight:bold;">TituloLibro</td>
+                        <td class="text-center" style="font-weight:bold;">FechaPublicacion</td>
+                        <td class="visually-hidden" style="font-weight:bold;">IdAutor</td>
+                        <td class="text-center" style="font-weight:bold;">Autor</td>
+                        <td class="visually-hidden" style="font-weight:bold;">IdAutor</td>
+                        <td class="text-center" style="font-weight:bold;">Editorial</td>
+                        <td class="text-center" style="font-weight:bold;">Sipnosis</td>
+                        <td class="text-center" style="font-weight:bold;">Portada</td>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ML.Libro libro in Model.Libros)
+                    {
+                        <tr>
+                            <td class="visually-hidden">@libro.IdLibro</td>
+                            <td>@libro.TituloLibro </td>
+                            <td>@libro.FechaPublicacion </td>
+                            <td class="visually-hidden">@libro.Autor.IdAutor</td>
+                            <td>@libro.Autor.Nombre @libro.Autor.ApellidoPaterno @libro.Autor.ApellidoMaterno </td>
+                            <td class="visually-hidden">@libro.Editorial.IdEditorial</td>
+                            <td>@libro.Editorial.Nombre </td>
+                            <td>@libro.Sipnosis </td>
+                            @if (libro.Portada == null || libro.Portada == "")
+                            {
+                                <td class="text-center"><img src="~/Images/libro.jpg" width="50px" height="50px" /></td>
+                            }
+                            else
+                            {
+                                <td> <img id="Img" src="data:image/*;libro.Portada" style="width:50px ; height:50px" /></td>
+                            }
+
+                            @Html.HiddenFor(model => model.Portada)
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+
+
+
+    </section>
+</div>
+

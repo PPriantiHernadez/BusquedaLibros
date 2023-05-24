@@ -171,7 +171,7 @@ namespace PL.Controllers
                     return PartialView("Modal");
                 }
                 else
-                {
+        {
                     ViewBag.Message = "Ocurrio un error al eliminar el registro";
                     return PartialView("Modal");
                 }
