@@ -1,0 +1,133 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Agregar libro</h2>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Form", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.IdLibro, new { @class = "visually-hidden" })
+
+                    @Html.TextBoxFor(model => model.IdLibro, new { @class = "visually-hidden form-control" })
+                    @Html.ValidationMessageFor(model => model.IdLibro)
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.TituloLibro)
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-book" style="color:mediumpurple"></i></span>
+                        @Html.TextBoxFor(model => model.TituloLibro, new { @class = "form-control", @id = "txtTituloLibro"})
+                        @Html.ValidationMessageFor(model => model.TituloLibro)
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.FechaPublicacion)
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-book" style="color:mediumpurple"></i></span>
+                        @Html.TextBoxFor(model => model.FechaPublicacion, new { @class = "form-control", @id = "txtFechaPublicacion", @placeholder = "Ej.dd/MM/yyyy" })
+                        @Html.ValidationMessageFor(model => model.FechaPublicacion)
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Autor)
+
+                @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.Autor.IdAutor)
+
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Editorial)
+
+                @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.Editorial.IdEditorial)
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Sipnosis)
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-bookmark-star fa-fade" style="color:mediumpurple"></i></span>
+                        @Html.TextBoxFor(model => model.Sipnosis, new { @class = "form-control", @id = "txtSipnosis"})
+                        @Html.ValidationMessageFor(model => model.Sipnosis)
+
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Portada)
+                    <div class="input-group">
+
+                        <span class="input-group-text"><i class="bi bi-card-image" style="color: mediumpurple"></i></span>
+
+                        <input id="inpImagen" type='file' class="form-control" name="inpImagen" onchange="validateFile(this), visualizarImagen(this);  " />
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.Portada)
+
+            </div>
+          </div>
+
+            
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Libro", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#txtFechaPublicacion").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1920:2023"
+            });
+        });
+    </script>
+
+
+}
+
