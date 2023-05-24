@@ -343,6 +343,7 @@ namespace BL
             return result;
         }
 
+
         //GetAll
         public static ML.Result GetAll(ML.Libro libro)
         {
