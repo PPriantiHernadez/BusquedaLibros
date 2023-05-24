@@ -395,6 +395,7 @@ namespace BL
 
         //GetAll Busqueda abierta
 
+
         public static ML.Result GetAllLibro(ML.Libro libro)
         {
             ML.Result result = new ML.Result();
