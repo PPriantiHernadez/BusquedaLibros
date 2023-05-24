@@ -393,5 +393,59 @@ namespace BL
             }
             return result;
         }
+
+        //GetAll Busqueda abierta
+
+        public static ML.Result GetAllLibro(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+                    var libroList = context.Libros.FromSqlRaw($"LibroGetAll {libro.IdLibro},{libro.Autor.IdAutor},'{libro.Editorial.IdEditorial}'").ToList();
+
+                    result.Objects = new List<object>();
+
+                    foreach (var row in libroList)
+                    {
+
+
+                        libro.IdLibro = row.IdLibro;
+                        libro.TituloLibro = row.TituloLibro;
+                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = row.IdAutor.Value;
+                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.Editorial.Nombre = row.NombreEditorial;
+
+                        libro.Sipnosis = row.Sipnosis;
+                        libro.Portada = row.Portada;
+
+                        result.Objects.Add(libro);
+
+                    }
+                    result.Correct = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = ex.Message;
+
+            }
+            return result;
+        }
+
+
+
     }
 }
