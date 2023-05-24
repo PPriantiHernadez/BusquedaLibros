@@ -133,6 +133,32 @@ namespace BL
             return result;
         }
 
+        public static ML.Result LibroDeleteByEditorial(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
+                {
+                    int query = cnn.Database.ExecuteSqlRaw($"LibroDeleteByAutor {libro.Editorial.IdEditorial}");
+
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "An error occurred while inserting the record into the table" + result.Ex;
+                //throw;
+            }
+            return result;
+        }
+
         //CREAR CONSULTAS POR TITULO DE LIBRO :) PRISCILA
 
         public static ML.Result LibroGetbyTitulo(string TituloLibro)
@@ -225,6 +251,5 @@ namespace BL
             }
             return result;
         }
-
     }
 }
