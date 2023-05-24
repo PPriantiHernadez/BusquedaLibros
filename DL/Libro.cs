@@ -13,7 +13,15 @@ public partial class Libro
 
     public byte? IdAutor { get; set; }
 
+    public string? NombreAutor { get; set; }
+
+    public string? ApellidoPaterno { get; set; }
+
+    public string? ApellidoMaterno { get; set; }
+
     public byte? IdEditorial { get; set; }
+
+    public string? NombreEditorial { get; set; }
 
     public string? Sipnosis { get; set; }
 
