@@ -444,6 +444,88 @@ namespace BL
             return result;
         }
 
+        //GetById
+        public static ML.Result GetById(byte IdLibro)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+
+                    var libroList = context.Libros.FromSqlRaw($"GetById {IdLibro}").AsEnumerable().FirstOrDefault();
+
+                    if (libroList != null)
+                    {
+                        ML.Libro libro = new ML.Libro();
+
+                        libro.IdLibro = libroList.IdLibro;
+                        libro.TituloLibro = libroList.TituloLibro;
+                        libro.FechaPublicacion = libroList.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = libroList.IdAutor.Value;
+                        libro.Autor.Nombre = libroList.NombreAutor;
+                        libro.Autor.ApellidoPaterno = libroList.ApellidoPaterno;
+                        libro.Autor.ApellidoMaterno = libroList.ApellidoMaterno;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = libroList.IdEditorial.Value;
+                        libro.Editorial.Nombre = libroList.NombreEditorial;
+
+                        libro.Sipnosis = libroList.Sipnosis;
+                        libro.Portada = libroList.Portada;
+
+                        result.Object = libro;
+                        result.Correct = true;
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrió un error al obtener los registros en la tabla libros";
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+        //Delete
+        public static ML.Result Delete(byte IdLibro)
+        {
+            ML.Result result = new ML.Result();
+
+            //ML.Libro libro = new ML.Libro();
+            try
+            {
+                using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
+                {
+                    int query = cnn.Database.ExecuteSqlRaw($"LibroDelete {IdLibro}");
+
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = "An error occurred while deleting the record into the table" + result.Ex;
+                throw;
+            }
+            return result;
+        }
 
 
     }
