@@ -30,4 +30,8 @@ public partial class Libro
     public virtual Autor? IdAutorNavigation { get; set; }
 
     public virtual Editorial? IdEditorialNavigation { get; set; }
+    public string NombreAutor { get; set; }
+    public string ApellidoPaterno { get; set; }
+    public string NombreEditorial { get; set; }
+    public string ApellidoMaterno { get; set; }
 }
