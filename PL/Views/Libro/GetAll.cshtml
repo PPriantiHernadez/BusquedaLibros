@@ -1,0 +1,78 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+
+        <h1 class="text-center">Lista de Libros</h1>
+        <p>
+            En este modulo puedes buscar libros por autor
+
+        </p>
+    </section>
+    <section>
+
+        <div style="float:right;">
+            <div class="row">
+                @Html.ActionLink("Agregar", "Form", "Aseguradora", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus-fill" })
+            </div>
+        </div>
+    </section>
+    <hr />
+    <section>
+        @if (Model.Libros == null)
+        {
+            <div class="row">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Message
+                </div>
+            </div>
+        }
+        else
+        {
+
+
+            <table class="table table-hover table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        
+                        <td class="visually-hidden">IdAutor</td>
+                        <td class="text-center" style="font-weight:bold;">TituloLibro</td>
+                        <td class="text-center" style="font-weight:bold;">FechaPublicacion</td>
+                        <td class="visually-hidden" style="font-weight:bold;">IdAutor</td>
+                        <td class="text-center" style="font-weight:bold;">Autor</td>
+                        <td class="visually-hidden" style="font-weight:bold;">IdAutor</td>
+                        <td class="text-center" style="font-weight:bold;">Editorial</td>
+                        
+                        <td class="text-center" style="font-weight:bold;">NombreUsuario</td>
+                        <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+                    {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })"></a></td>
+                            <td class="visually-hidden">@aseguradora.IdAseguradora</td>
+                            <td>@aseguradora.Nombre </td>
+                            <td>@aseguradora.FechaCreacion </td>
+                            <td>@aseguradora.FechaModificacion </td>
+                            <td class="visually-hidden">@aseguradora.Usuario.IdUsuario </td>
+                            <td>@aseguradora.UsuarioNombre </td>
+                            <td class="text-center"><a class="btn btn-danger bi bi-trash" href="@Url.Action("Delete", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+
+
+
+    </section>
+</div>
+
