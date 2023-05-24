@@ -15,6 +15,8 @@ namespace PL.Controllers
 
         public ActionResult GetAll()
         {
+            ML.Libro libro = new ML.Libro();
+            
             ML.Libro resultLibro = new ML.Libro();
             resultLibro.Libros = new List<object>();
 
@@ -36,6 +38,17 @@ namespace PL.Controllers
                     {
                         ML.Libro ResultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Libro>(resultItem.ToString());
                         resultLibro.Libros.Add(ResultItemList);
+
+                        ML.Result resultAutor = BL.Autor.GetAll();
+                        ML.Result resultEditorial = BL.Editorial.GetAll();
+
+
+                        ResultItemList.Editorial = new ML.Editorial();
+                        ResultItemList.Autor = new ML.Autor();
+
+
+                        resultLibro.Autor.Autores = resultAutor.Objects;
+                        resultLibro.Editorial.Editoriales = resultEditorial.Objects;
                     }
                 }
             }

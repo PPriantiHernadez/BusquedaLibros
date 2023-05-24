@@ -17,7 +17,7 @@ namespace BL
             {
                 using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
                 {
-                    var editorialList = context.Autors.FromSqlRaw($"EditorialGetAll").ToList();
+                    var editorialList = context.Editorials.FromSqlRaw($"EditorialGetAll").ToList();
 
                     result.Objects = new List<object>();
 

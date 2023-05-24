@@ -9,7 +9,7 @@ namespace ML
     public class Editorial
     {
         public byte IdEditorial { get; set; } //PK
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
         public List<object> Editoriales { get; set; }
     }
