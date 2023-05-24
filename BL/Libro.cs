@@ -10,6 +10,7 @@ namespace BL
     public class Libro
     {
 
+
         //CREAR NUEVA INFORMACION DE LIBRO :) PRISCILA
         public static ML.Result Add(ML.Libro libro)
         { 
