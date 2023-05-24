@@ -10,8 +10,7 @@ namespace BL
     public class Libro
     {
 
-        public static ML.Result LibrosByEditorial(int idEditorial)
-        {
+
         public static ML.Result LibrosByEditorial(int idEditorial)
         {
             ML.Result result = new ML.Result();
@@ -103,7 +102,7 @@ namespace BL
                 result.Correct = false;
                 result.Ex = ex;
                 result.ErrorMessage = "An error occurred while inserting the record into the table" + result.Ex;
-                throw;
+                //throw;
             }
             return result;
         }
@@ -127,110 +126,105 @@ namespace BL
             catch (Exception ex)
             {
                 result.Correct = false;
-
+                result.Ex = ex;
+                result.ErrorMessage = "An error occurred while inserting the record into the table" + result.Ex;
+                //throw;
             }
+            return result;
         }
+
+        //CREAR CONSULTAS POR TITULO DE LIBRO :) PRISCILA
+
+        public static ML.Result LibroGetbyTitulo(string TituloLibro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+                    var libroList = context.Libros.FromSqlRaw($"LibroGetbyTitulo  '{TituloLibro}'").ToList();
+
+                    result.Objects = new List<object>();
+
+                    foreach (var row in libroList)
+                    {
+                        ML.Libro libro = new ML.Libro();
+
+                        libro.IdLibro = row.IdLibro;
+                        libro.TituloLibro = row.TituloLibro;
+                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = row.IdAutor.Value;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
+
+                        libro.Sipnosis = row.Sipnosis;
+                        libro.Portada = row.Portada;
+
+                        result.Objects.Add(libro);
+
+                    }
+                    result.Correct = true;
+                }
+            }
             catch (Exception ex)
             {
                 result.Correct = false;
                 result.Ex = ex;
+                result.ErrorMessage = ex.Message;
 
             }
             return result;
         }
 
-//CREAR CONSULTAS POR TITULO DE LIBRO :) PRISCILA
-
-public static ML.Result LibroGetbyTitulo(string TituloLibro)
-{
-    ML.Result result = new ML.Result();
-
-    try
-    {
-        using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+        //CREAR CONSULTAS POR FECHA DE PUBLICACION :) PRISCILA
+        public static ML.Result LibroGetbyFechaPublicacion(string FechaPublicacion)
         {
-            var libroList = context.Libros.FromSqlRaw($"LibroGetbyTitulo  '{TituloLibro}'").ToList();
+            ML.Result result = new ML.Result();
 
-            result.Objects = new List<object>();
-
-            foreach (var row in libroList)
+            try
             {
-                ML.Libro libro = new ML.Libro();
+                using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
+                {
+                    var libroList = context.Libros.FromSqlRaw($"LibroGetbyFechaPublicacion  '{FechaPublicacion}'").ToList();
 
-                libro.IdLibro = row.IdLibro;
-                libro.TituloLibro = row.TituloLibro;
-                libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+                    result.Objects = new List<object>();
 
-                libro.Autor = new ML.Autor();
-                libro.Autor.IdAutor = row.IdAutor.Value;
+                    foreach (var row in libroList)
+                    {
+                        ML.Libro libro = new ML.Libro();
 
-                libro.Editorial = new ML.Editorial();
-                libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                        libro.IdLibro = row.IdLibro;
+                        libro.TituloLibro = row.TituloLibro;
+                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
 
-                libro.Sipnosis = row.Sipnosis;
-                libro.Portada = row.Portada;
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.IdAutor = row.IdAutor.Value;
 
-                result.Objects.Add(libro);
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
+
+                        libro.Sipnosis = row.Sipnosis;
+                        libro.Portada = row.Portada;
+
+                        result.Objects.Add(libro);
+
+                    }
+                    result.Correct = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = ex.Message;
 
             }
-            result.Correct = true;
+            return result;
         }
-    }
-    catch (Exception ex)
-    {
-        result.Correct = false;
-        result.Ex = ex;
-        result.ErrorMessage = ex.Message;
-
-    }
-    return result;
-}
-
-//CREAR CONSULTAS POR FECHA DE PUBLICACION :) PRISCILA
-public static ML.Result LibroGetbyFechaPublicacion(string FechaPublicacion)
-{
-    ML.Result result = new ML.Result();
-
-    try
-    {
-        using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
-        {
-            var libroList = context.Libros.FromSqlRaw($"LibroGetbyFechaPublicacion  '{FechaPublicacion}'").ToList();
-
-            result.Objects = new List<object>();
-
-            foreach (var row in libroList)
-            {
-                ML.Libro libro = new ML.Libro();
-
-                libro.IdLibro = row.IdLibro;
-                libro.TituloLibro = row.TituloLibro;
-                libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
-
-                libro.Autor = new ML.Autor();
-                libro.Autor.IdAutor = row.IdAutor.Value;
-
-                libro.Editorial = new ML.Editorial();
-                libro.Editorial.IdEditorial = row.IdEditorial.Value;
-
-                libro.Sipnosis = row.Sipnosis;
-                libro.Portada = row.Portada;
-
-                result.Objects.Add(libro);
-
-            }
-            result.Correct = true;
-        }
-    }
-    catch (Exception ex)
-    {
-        result.Correct = false;
-        result.Ex = ex;
-        result.ErrorMessage = ex.Message;
-
-    }
-    return result;
-}
 
     }
 }
