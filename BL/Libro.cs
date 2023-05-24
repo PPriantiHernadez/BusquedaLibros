@@ -9,7 +9,6 @@ namespace BL
 {
     public class Libro
     {
-
         public static ML.Result LibrosByEditorial(int idEditorial)
         {
             ML.Result result = new ML.Result();
