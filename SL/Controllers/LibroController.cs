@@ -6,7 +6,7 @@ namespace SL.Controllers
     {
         [Route("api/Libro/Add")]
         [HttpGet]
-        public IActionResult GetAll([FromBody] ML.Libro libro)
+        public IActionResult Add([FromBody] ML.Libro libro)
         {
             ML.Result result = BL.Libro.Add(libro);
 
@@ -82,7 +82,7 @@ namespace SL.Controllers
             else { return NotFound(result); }
         }
 
-        [Route("api/l/LibroDeleteByAutor/{id}")]
+        [Route("api/Libro/LibroDeleteByAutor/{id}")]
         [HttpDelete]
         public IActionResult LibroDeleteByAutor(byte id)
         {
@@ -97,7 +97,7 @@ namespace SL.Controllers
             else { return NotFound(result); }
         }
 
-        [Route("api/l/LibroDeleteByEditorial/{id}")]
+        [Route("api/Libro/LibroDeleteByEditorial/{id}")]
         [HttpDelete]
         public IActionResult LibroDeleteByEditorial(byte id)
         {
@@ -105,6 +105,47 @@ namespace SL.Controllers
             libro.Autor = new ML.Autor();
             libro.Autor.IdAutor = id;
             ML.Result result = BL.Libro.LibroDeleteByEditorial(libro);
+            if (result.Correct)
+            {
+                return Ok(result.Object);
+            }
+            else { return NotFound(result); }
+        }
+
+        [Route("api/Libro/GetAll")]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            ML.Libro libro = new ML.Libro();
+            ML.Result result = BL.Libro.GetAllLibro(libro);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else { return NotFound(result); }
+        }
+
+        [Route("api/Libro/GetByid/{id}")]
+        [HttpGet]
+        public IActionResult GetByid(byte id)
+        {
+            ML.Result result = BL.Libro.GetById(id);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else { return NotFound(result); }
+        }
+
+        [Route("api/Libro/Delete/{id}")]
+        [HttpDelete]
+        public IActionResult Delete(byte id)
+        {
+            ML.Libro libro = new ML.Libro();
+            libro.IdLibro = id; 
+            ML.Result result = BL.Libro.Delete(id);
             if (result.Correct)
             {
                 return Ok(result.Object);
