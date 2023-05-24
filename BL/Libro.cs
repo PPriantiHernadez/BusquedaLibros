@@ -9,6 +9,7 @@ namespace BL
 {
     public class Libro
     {
+
             ML.Result result = new ML.Result();
 
             try
