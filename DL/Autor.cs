@@ -18,4 +18,5 @@ public partial class Autor
     public string? PaisOrigen { get; set; }
 
     public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();
+    public byte IdEditorial { get; set; }
 }
