@@ -20,8 +20,7 @@ namespace PL.Controllers
             libro.Autor = new ML.Autor();
             libro.Editorial = new ML.Editorial();
 
-            ML.Libro resultLibro = new ML.Libro();
-            resultLibro.Libros = new List<object>();
+            libro.Libros = new List<object>();
 
             using (var client = new HttpClient())
             {
@@ -40,7 +39,7 @@ namespace PL.Controllers
                     foreach (var resultItem in readTask.Result.Objects)
                     {
                         ML.Libro ResultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Libro>(resultItem.ToString());
-                        resultLibro.Libros.Add(ResultItemList);
+                        libro.Libros.Add(ResultItemList);
 
                         ML.Result resultAutor = BL.Autor.GetAll();
                         ML.Result resultEditorial = BL.Editorial.GetAll();
@@ -50,16 +49,21 @@ namespace PL.Controllers
                     }
                 }
             }
-            return View(resultLibro);
+            return View(libro);
         }
 
         [HttpPost]
         public ActionResult GetAll(ML.Libro libro)
         {
-            ML.Result result = BL.Libro.GetAllLibro(libro);
+            ML.Result result = BL.Libro.GetAllLibro(libro.IdLibro, libro.Autor.IdAutor, libro.Editorial.IdEditorial);
 
             if (result.Correct)
             {
+                ML.Result resultAutor = BL.Autor.GetAll();
+                ML.Result resultEditorial = BL.Editorial.GetAll();
+
+                libro.Autor.Autores = resultAutor.Objects;
+                libro.Editorial.Editoriales = resultEditorial.Objects;
                 libro.Libros = result.Objects;
             }
             else

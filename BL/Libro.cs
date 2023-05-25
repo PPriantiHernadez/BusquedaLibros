@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -392,27 +393,53 @@ namespace BL
         }
 
         //GetAll Busqueda abierta
-        public static ML.Result GetAllLibro(ML.Libro libro)
+        public static ML.Result GetAllLibro(int idLibro, int idAutor, int idEditorial)
         {
-            ML.Result result = new ML.Result();
+            var idL = "";
+            var idA = "";
+            var idE = "";
 
-            libro.Autor = new ML.Autor();
-            libro.Editorial = new ML.Editorial();
+            ML.Result result = new ML.Result();
+            if (idLibro == 0)
+            {
+                idL = "";
+            }
+            else
+            {
+                idL = idLibro.ToString();
+            }
+            if (idAutor == 0)
+            {
+                idA = "";
+            }
+            else
+            {
+                idA = idAutor.ToString();
+            }
+            if (idEditorial == 0)
+            {
+                idE = "";
+            }
+            else
+            {
+                idE = idEditorial.ToString();
+            }
             try
             {
                 using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
                 {
-                    var libroList = context.Libros.FromSqlRaw($"LibrosGetAll {libro.IdLibro}, {libro.Autor.IdAutor}, {libro.Editorial.IdEditorial}").ToList();
+                    var query = context.Libros.FromSqlRaw($"LibrosGetAll'{idL}', '{idA}', '{idE}'").ToList();
 
                     result.Objects = new List<object>();
 
-                    if ( libroList != null )
+                    if ( query != null )
                     {
-                        foreach (var row in libroList)
+                        foreach (var row in query)
                         {
+                            ML.Libro libro = new ML.Libro();
                             libro.IdLibro = row.IdLibro;
                             libro.TituloLibro = row.TituloLibro;
-                            libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+                            libro.FechaPublicacion = row.FechaPublicacion.ToString();
 
                             libro.Autor = new ML.Autor();
                             libro.Autor.IdAutor = row.IdAutor.Value;

@@ -117,7 +117,7 @@ namespace SL.Controllers
         public IActionResult GetAll()
         {
             ML.Libro libro = new ML.Libro();
-            ML.Result result = BL.Libro.GetAllLibro(libro);
+            ML.Result result = BL.Libro.GetAllLibro(0, 0, 0);
 
             if (result.Correct)
             {
