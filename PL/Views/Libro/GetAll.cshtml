@@ -13,6 +13,11 @@
 
         </p>
     </section>
+    <section>
+        <div style="float:right;">
+            @Html.ActionLink("Agregar", "Form", "Libro", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus-fill" })
+        </div>
+    </section>
     <hr />
 
     <div class="container-fluid">
@@ -20,6 +25,9 @@
 
         @using (Html.BeginForm("GetAll", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            <div class="row">
+
+          
             <div class="col-md-3">
                 @Html.LabelFor(model => model.Libros)
 
@@ -51,6 +59,7 @@
 
                 <input type="submit" value="Buscar" class="btn btn-info " />
 
+            </div>
             </div>
         }
 
@@ -84,6 +93,7 @@
                         <td class="text-center" style="font-weight:bold;">Editorial</td>
                         <td class="text-center" style="font-weight:bold;">Sipnosis</td>
                         <td class="text-center" style="font-weight:bold;">Portada</td>
+                        <td class="text-center" style="font-weight: bold;">Eliminar</td>
                         
                     </tr>
                 </thead>
@@ -110,7 +120,8 @@
                             }
 
                             @Html.HiddenFor(model => model.Portada)
-                            
+
+                            <td class="text-center"><a class="btn btn-danger bi bi-trash3 glyphicon glyphicon-trash" href="@Url.Action("Delete", "Libro", new { IdLibro = libro.IdLibro})" onclick="return confirm('Estas seguro que deseas eliminar este libro?');"></a></td>
                         </tr>
                     }
                 </tbody>

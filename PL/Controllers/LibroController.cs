@@ -99,8 +99,8 @@ namespace PL.Controllers
                 ML.Result result = new ML.Result();
                 using (var client = new HttpClient())
                 {
-                    string urlApi = configuration["urlWebApi"];
-                    client.BaseAddress = new Uri(urlApi);
+                    //string urlApi = configuration["http://localhost:5230/api/"];
+                    client.BaseAddress = new Uri("http://localhost:5230/api/");
 
                     var responseTask = client.GetAsync("Libro/GetById/" + idLibro);
                     responseTask.Wait();
@@ -135,8 +135,8 @@ namespace PL.Controllers
             //add
             using (var client = new HttpClient())
             {
-                string urlApi = configuration["urlWebApi"];
-                client.BaseAddress = new Uri(urlApi);
+                //string urlApi = configuration["UrlWebApi"];
+                client.BaseAddress = new Uri("http://localhost:5230/api/");
 
                 var postTask = client.PostAsJsonAsync<ML.Libro>("Libro/Add", libro);
                 postTask.Wait();
@@ -171,8 +171,8 @@ namespace PL.Controllers
         {
             using (var client = new HttpClient())
             {
-                string urlApi = configuration["urlWebApi"];
-                client.BaseAddress = new Uri(urlApi);
+                //string urlApi = configuration["urlWebApi"];
+                client.BaseAddress = new Uri("http://localhost:5230/api/");
 
                 var postTask = client.GetAsync("Libro/Delete/" + idLibro);
                 postTask.Wait();

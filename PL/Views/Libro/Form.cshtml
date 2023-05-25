@@ -13,6 +13,7 @@
 
     @using (Html.BeginForm("Form", "Libro", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        <div class="row">
         <div class="form-horizontal">
             <div class="form-group">
                 <div class="col-md-3">
@@ -28,7 +29,7 @@
                 <div class="col-md-3">
                     @Html.LabelFor(model => model.TituloLibro)
                     <div class="input-group">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-book" style="color:mediumpurple"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-book" style="color:mediumpurple"></i></span>
                         @Html.TextBoxFor(model => model.TituloLibro, new { @class = "form-control", @id = "txtTituloLibro"})
                         @Html.ValidationMessageFor(model => model.TituloLibro)
 
@@ -41,7 +42,7 @@
                 <div class="col-md-3">
                     @Html.LabelFor(model => model.FechaPublicacion)
                     <div class="input-group">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-book" style="color:mediumpurple"></i></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar-heart" style="color:mediumpurple"></i></span>
                         @Html.TextBoxFor(model => model.FechaPublicacion, new { @class = "form-control", @id = "txtFechaPublicacion", @placeholder = "Ej.dd/MM/yyyy" })
                         @Html.ValidationMessageFor(model => model.FechaPublicacion)
 
@@ -73,7 +74,7 @@
                 <div class="col-md-3">
                     @Html.LabelFor(model => model.Sipnosis)
                     <div class="input-group">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid bi bi-bookmark-star fa-fade" style="color:mediumpurple"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-bookmark-star" style="color:mediumpurple"></i></span>
                         @Html.TextBoxFor(model => model.Sipnosis, new { @class = "form-control", @id = "txtSipnosis"})
                         @Html.ValidationMessageFor(model => model.Sipnosis)
 
@@ -89,11 +90,20 @@
 
                         <input id="inpImagen" type='file' class="form-control" name="inpImagen" onchange="validateFile(this), visualizarImagen(this);  " />
                     </div>
+                            @if (Model.Portada == null)
+                            {
+                                <img id="Img" src="~/Images/libro.jpg" style="width:50px ; height:50px" />
+                            }
+                            else
+                            {
+                                <img id="Img" src="data:image/*;Model.Imagen" style="width:50px ; height:50px" />
+                            }
                 </div>
                 @Html.HiddenFor(model => model.Portada)
 
             </div>
           </div>
+            </div>
 
             
 
