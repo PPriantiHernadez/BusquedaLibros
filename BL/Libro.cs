@@ -344,6 +344,7 @@ namespace BL
         //GetAll
         public static ML.Result GetAll(ML.Libro libro)
         {
+
             ML.Result result = new ML.Result();           
             try
             {

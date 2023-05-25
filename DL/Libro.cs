@@ -31,10 +31,10 @@ public partial class Libro
 
     public virtual Editorial? IdEditorialNavigation { get; set; }
  
-    public string ApellidoPaterno { get; set; }
-    public string NombreEditorial { get; set; }
-    public string ApellidoMaterno { get; set; }
-    public string ApellidoPaterno { get; set; }
-    public string NombreEditorial { get; set; }
-    public string ApellidoMaterno { get; set; }
+    //public string ApellidoPaterno { get; set; }
+    ////public string NombreEditorial { get; set; }
+    //public string ApellidoMaterno { get; set; }
+    //public string ApellidoPaterno { get; set; }
+    //public string NombreEditorial { get; set; }
+    //public string ApellidoMaterno { get; set; }
 }
