@@ -9,13 +9,13 @@ namespace ML
     public class Autor
     {
         public byte IdAutor { get; set; } //PK
-        public string Nombre { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string FechaNacimiento { get; set; }
-        public string PaisOrigen { get; set; }
+        public string? Nombre { get; set; }
+        public string? ApellidoPaterno { get; set; }
+        public string? ApellidoMaterno { get; set; }
+        public string? FechaNacimiento { get; set; }
+        public string? PaisOrigen { get; set; }
 
-        public List<object> Autores { get; set; }
+        public List<object>? Autores { get; set; }
 
     }
 }

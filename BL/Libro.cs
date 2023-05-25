@@ -61,7 +61,7 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
-                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.Nombre = row.AutorNombre;
                         libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                         libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -111,7 +111,7 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
-                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.Nombre = row.AutorNombre;
                         libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                         libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -162,7 +162,7 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
-                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.Nombre = row.AutorNombre;
                         libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                         libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -188,6 +188,7 @@ namespace BL
             }
             return result;
         }
+
         //CONSULTA LIBRO EDITORIAL :3
         public static ML.Result LibrosByEditorial(int idEditorial)
         {
@@ -197,7 +198,7 @@ namespace BL
             {
                 using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
                 {
-                    var query = cnn.Libros.FromSqlRaw($"LibrosByEditorial {idEditorial}").ToList();
+                    var query = cnn.Libros.FromSqlRaw($"LibroByEditorial {idEditorial}").ToList();
 
                     result.Objects = new List<object>();
 
@@ -213,7 +214,7 @@ namespace BL
 
                             libro.Autor = new ML.Autor();
                             libro.Autor.IdAutor = Convert.ToByte(row.IdAutor);
-                            libro.Autor.Nombre = row.NombreAutor;
+                            libro.Autor.Nombre = row.AutorNombre;
                             libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                             libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -238,9 +239,8 @@ namespace BL
             return result;
         }
 
-
         //CONSULTA POR AUTOR Y EDITORIAL :3
-        public static ML.Result LibroByAutor_Fecha(int idAutor, string fecha)
+        public static ML.Result LibroByAutor_Fecha(string autor, string fecha)
         {
             ML.Result result = new ML.Result();
 
@@ -248,7 +248,7 @@ namespace BL
             {
                 using (DL.SistemaBusquedaContext cnn = new DL.SistemaBusquedaContext())
                 {
-                    var query = cnn.Libros.FromSqlRaw($"LibroByAutor_Fecha {idAutor},'{fecha}'").ToList();
+                    var query = cnn.Libros.FromSqlRaw($"LibroByAutor_Fecha {autor},'{fecha}'").ToList();
 
                     result.Objects = new List<object>();
 
@@ -263,7 +263,7 @@ namespace BL
 
                             libro.Autor = new ML.Autor();
                             libro.Autor.IdAutor = Convert.ToByte(row.IdAutor);
-                            libro.Autor.Nombre = row.NombreAutor;
+                            libro.Autor.Nombre = row.AutorNombre;
                             libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                             libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -341,15 +341,12 @@ namespace BL
             return result;
         }
 
-
         //GetAll
         public static ML.Result GetAll(ML.Libro libro)
         {
-            ML.Result result = new ML.Result();
-
+            ML.Result result = new ML.Result();           
             try
             {
-
                 using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
                 {
                     var libroList = context.Libros.FromSqlRaw($"LibroGetAll '{libro.TituloLibro}','{libro.FechaPublicacion}','{libro.Autor.Nombre}','{libro.Editorial.Nombre}'").ToList();
@@ -358,7 +355,7 @@ namespace BL
 
                     foreach (var row in libroList)
                     {
-                        
+
 
                         libro.IdLibro = row.IdLibro;
                         libro.TituloLibro = row.TituloLibro;
@@ -366,7 +363,7 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = row.IdAutor.Value;
-                        libro.Autor.Nombre = row.NombreAutor;
+                        libro.Autor.Nombre = row.AutorNombre;
                         libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
                         libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
@@ -394,45 +391,46 @@ namespace BL
         }
 
         //GetAll Busqueda abierta
-
-
         public static ML.Result GetAllLibro(ML.Libro libro)
         {
             ML.Result result = new ML.Result();
 
+            libro.Autor = new ML.Autor();
+            libro.Editorial = new ML.Editorial();
             try
             {
                 using (DL.SistemaBusquedaContext context = new DL.SistemaBusquedaContext())
                 {
-                    var libroList = context.Libros.FromSqlRaw($"LibroGetAll {libro.IdLibro},{libro.Autor.IdAutor},'{libro.Editorial.IdEditorial}'").ToList();
+                    var libroList = context.Libros.FromSqlRaw($"LibrosGetAll {libro.IdLibro}, {libro.Autor.IdAutor}, {libro.Editorial.IdEditorial}").ToList();
 
                     result.Objects = new List<object>();
 
-                    foreach (var row in libroList)
+                    if ( libroList != null )
                     {
+                        foreach (var row in libroList)
+                        {
+                            libro.IdLibro = row.IdLibro;
+                            libro.TituloLibro = row.TituloLibro;
+                            libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
 
+                            libro.Autor = new ML.Autor();
+                            libro.Autor.IdAutor = row.IdAutor.Value;
+                            libro.Autor.Nombre = row.AutorNombre;
+                            libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
+                            libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
 
-                        libro.IdLibro = row.IdLibro;
-                        libro.TituloLibro = row.TituloLibro;
-                        libro.FechaPublicacion = row.FechaPublicacion.ToString("ddMMyyyy");
+                            libro.Editorial = new ML.Editorial();
+                            libro.Editorial.IdEditorial = row.IdEditorial.Value;
+                            libro.Editorial.Nombre = row.NombreEditorial;
 
-                        libro.Autor = new ML.Autor();
-                        libro.Autor.IdAutor = row.IdAutor.Value;
-                        libro.Autor.Nombre = row.NombreAutor;
-                        libro.Autor.ApellidoPaterno = row.ApellidoPaterno;
-                        libro.Autor.ApellidoMaterno = row.ApellidoMaterno;
+                            libro.Sipnosis = row.Sipnosis;
+                            libro.Portada = row.Portada;
 
-                        libro.Editorial = new ML.Editorial();
-                        libro.Editorial.IdEditorial = row.IdEditorial.Value;
-                        libro.Editorial.Nombre = row.NombreEditorial;
+                            result.Objects.Add(libro);
 
-                        libro.Sipnosis = row.Sipnosis;
-                        libro.Portada = row.Portada;
-
-                        result.Objects.Add(libro);
-
+                        }
+                        result.Correct = true;
                     }
-                    result.Correct = true;
                 }
             }
             catch (Exception ex)
@@ -466,7 +464,7 @@ namespace BL
 
                         libro.Autor = new ML.Autor();
                         libro.Autor.IdAutor = libroList.IdAutor.Value;
-                        libro.Autor.Nombre = libroList.NombreAutor;
+                        libro.Autor.Nombre = libroList.AutorNombre;
                         libro.Autor.ApellidoPaterno = libroList.ApellidoPaterno;
                         libro.Autor.ApellidoMaterno = libroList.ApellidoMaterno;
 
@@ -500,6 +498,7 @@ namespace BL
 
             return result;
         }
+
         //Delete
         public static ML.Result Delete(byte IdLibro)
         {
@@ -527,7 +526,5 @@ namespace BL
             }
             return result;
         }
-
-
     }
 }

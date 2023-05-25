@@ -29,7 +29,7 @@ namespace BL
                         autor.Nombre = row.Nombre;
                         autor.ApellidoPaterno = row.ApellidoPaterno;
                         autor.ApellidoMaterno = row.ApellidoMaterno;
-                        autor.FechaNacimiento = row.FechaNacimiento.Value.ToString("ddMMyyyy");
+                        autor.FechaNacimiento = row.FechaNacimiento.ToString();
                         autor.PaisOrigen = row.PaisOrigen;
 
 
