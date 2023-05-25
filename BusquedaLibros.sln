@@ -13,11 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ML", "ML\ML.csproj", "{51B1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SL", "SL\SL.csproj", "{16DBAA51-BA6D-4558-94C2-240661187AC1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5D8B7BCD-A412-4B2C-B906-5D2E9F4758D0}"
-	ProjectSection(SolutionItems) = preProject
-		BL\SistemaBusqueda(1).bak = BL\SistemaBusqueda(1).bak
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
