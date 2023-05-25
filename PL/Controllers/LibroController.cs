@@ -16,7 +16,10 @@ namespace PL.Controllers
         public ActionResult GetAll()
         {
             ML.Libro libro = new ML.Libro();
-            
+
+            libro.Autor = new ML.Autor();
+            libro.Editorial = new ML.Editorial();
+
             ML.Libro resultLibro = new ML.Libro();
             resultLibro.Libros = new List<object>();
 
@@ -42,13 +45,8 @@ namespace PL.Controllers
                         ML.Result resultAutor = BL.Autor.GetAll();
                         ML.Result resultEditorial = BL.Editorial.GetAll();
 
-
-                        ResultItemList.Editorial = new ML.Editorial();
-                        ResultItemList.Autor = new ML.Autor();
-
-
-                        resultLibro.Autor.Autores = resultAutor.Objects;
-                        resultLibro.Editorial.Editoriales = resultEditorial.Objects;
+                        libro.Autor.Autores = resultAutor.Objects;
+                        libro.Editorial.Editoriales = resultEditorial.Objects;
                     }
                 }
             }
