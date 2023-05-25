@@ -31,18 +31,9 @@
             <div class="col-md-3">
                 @Html.LabelFor(model => model.Libros)
 
-                @Html.DropDownListFor(model => model.Libros, new SelectList(Model.Autor.Autores, "IdAutor", "TituloLibro"), "Selecciona una opcion", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.IdLibro, new SelectList(Model.Libros, "IdLibro", "TituloLibro"), "Selecciona una opcion", new { @class = "form-control" })
 
-                @Html.ValidationMessageFor(model => model.TituloLibro)
-
-            </div>
-
-            <div class="col-md-3">
-                @Html.LabelFor(model => model.Editorial)
-
-                @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
-
-                @Html.ValidationMessageFor(model => model.Editorial.IdEditorial)
+                @Html.ValidationMessageFor(model => model.IdLibro)
 
             </div>
 
