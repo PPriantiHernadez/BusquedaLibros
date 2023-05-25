@@ -55,10 +55,15 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult GetAll(ML.Libro libro)
         {
-            ML.Result result = BL.Libro.GetAllLibro(libro);
+            ML.Result result = BL.Libro.GetAllLibro(libro.IdLibro, libro.Autor.IdAutor, libro.Editorial.IdEditorial);
 
             if (result.Correct)
             {
+                ML.Result resultAutor = BL.Autor.GetAll();
+                ML.Result resultEditorial = BL.Editorial.GetAll();
+
+                libro.Autor.Autores = resultAutor.Objects;
+                libro.Editorial.Editoriales = resultEditorial.Objects;
                 libro.Libros = result.Objects;
             }
             else

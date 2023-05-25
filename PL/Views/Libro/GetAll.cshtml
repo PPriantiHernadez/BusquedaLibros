@@ -13,14 +13,6 @@
 
         </p>
     </section>
-    <section>
-
-        <div style="float:right;">
-            <div class="row">
-                @Html.ActionLink("Agregar", "Form", "Libro", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus-fill" })
-            </div>
-        </div>
-    </section>
     <hr />
 
     <div class="container-fluid">
@@ -52,6 +44,12 @@
                 @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Selecciona una opcion", new { @class = "form-control" })
 
                 @Html.ValidationMessageFor(model => model.Editorial.IdEditorial)
+
+            </div>
+
+            <div class="col text-center">
+
+                <input type="submit" value="Buscar" class="btn btn-info " />
 
             </div>
         }
